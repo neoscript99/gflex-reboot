@@ -1,0 +1,42 @@
+
+buildscript {
+    ext {
+        springBootVersion = '1.5.4.RELEASE'
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.11'
+    compile group: 'org.apache.flex.blazeds', name: 'blazeds-spring-boot-starter', version: '4.7.3'
+    compile(group: 'org.grails', name: 'gorm-hibernate5-spring-boot', version: '6.1.4.RELEASE') {
+        exclude group: 'org.codehaus.groovy', module: 'groovy'
+    }
+    compile group: 'com.h2database', name: 'h2'
+    //compile 'com.alibaba:druid-spring-boot-starter:1.1.2'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.16'
+
+    // Use the awesome Spock testing and specification framework
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+springBoot {
+    mainClass = 'ns.gflex.GflexBootApplication'
+}

@@ -1,0 +1,13 @@
+.gradle/
+build/
+classes/
+bin/
+
+.idea/
+
+*.log
+*.ipr  
+*.iws  
+out/  
+*.log.*  
+gflex-reboot-base.iml  
