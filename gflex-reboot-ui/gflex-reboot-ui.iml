@@ -20,36 +20,7 @@
         <compiler-options>
           <map>
             <entry key="compiler.context-root" value="/" />
-            <entry key="compiler.defaults-css-files" value="$MODULE_DIR$/../gflex-reboot-ui-lib/src/defaults.css&#10;D:/Java/git_repo/flex-autocomplete/fx3src/defaults.css" />
-            <entry key="compiler.locale" value="en_US" />
-            <entry key="compiler.services" value="$MODULE_DIR$/../gflex-reboot-starter/src/main/resources/META-INF/flex/services-config.xml" />
-          </map>
-          <option name="resourceFilesMode" value="None" />
-          <option name="additionalConfigFilePath" value="$MODULE_DIR$/../gflex-reboot-ui-lib/src/conf/flex-config.xml" />
-        </compiler-options>
-        <packaging-air-desktop />
-        <packaging-android />
-        <packaging-ios />
-      </configuration>
-      <configuration name="Initialize" main-class="Initialize" output-file="Initialize.swf" output-folder="$MODULE_DIR$/../gflex-reboot-starter/build/resources/main/static" use-html-wrapper="true" wrapper-template-path="$MODULE_DIR$/../gflex-reboot-ui-lib/html-template">
-        <dependencies target-player="10">
-          <entries>
-            <entry library-id="d9259eff-916e-48f6-827c-6ccedb4a7631">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry module-name="gflex-reboot-ui-lib" build-configuration-name="gflex-reboot-ui-lib">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry module-name="NSFlexLib" build-configuration-name="NSFlexLib">
-              <dependency linkage="Merged" />
-            </entry>
-          </entries>
-          <sdk name="3.6.0.16995" />
-        </dependencies>
-        <compiler-options>
-          <map>
-            <entry key="compiler.context-root" value="/" />
-            <entry key="compiler.defaults-css-files" value="$MODULE_DIR$/../gflex-reboot-ui-lib/src/defaults.css" />
+            <entry key="compiler.defaults-css-files" value="$MODULE_DIR$/../gflex-reboot-ui-lib/src/defaults.css&#10;$MODULE_DIR$/../NSFlexLib/flex-autocomplete/fx3src/defaults.css" />
             <entry key="compiler.locale" value="en_US" />
             <entry key="compiler.services" value="$MODULE_DIR$/../gflex-reboot-starter/src/main/resources/META-INF/flex/services-config.xml" />
           </map>
@@ -73,17 +44,6 @@
     <orderEntry type="module-library" exported="">
       <library type="flex">
         <properties id="457a31a1-31b7-49d8-9cb1-de667ae5a322" />
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/libs" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="d9259eff-916e-48f6-827c-6ccedb4a7631" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/libs" />
         </CLASSES>

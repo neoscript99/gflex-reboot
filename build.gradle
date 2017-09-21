@@ -28,7 +28,7 @@ allprojects {
     }
 }
 /*可在 .idea/modules.xml 中手工添加如下flex模块
-<module fileurl="file://D:/Java/git_repo/ns-flex/NSFlexLib/NSFlexLib.iml" filepath="D:/Java/git_repo/ns-flex/NSFlexLib/NSFlexLib.iml" />
+<module fileurl="file://$PROJECT_DIR$/NSFlexLib/NSFlexLib.iml" filepath="$PROJECT_DIR$/NSFlexLib/NSFlexLib.iml" />
 <module fileurl="file://$PROJECT_DIR$/gflex-reboot-ui/gflex-reboot-ui.iml" filepath="$PROJECT_DIR$/gflex-reboot-ui/gflex-reboot-ui.iml" />
 <module fileurl="file://$PROJECT_DIR$/gflex-reboot-ui-lib/gflex-reboot-ui-lib.iml" filepath="$PROJECT_DIR$/gflex-reboot-ui-lib/gflex-reboot-ui-lib.iml" />
 */

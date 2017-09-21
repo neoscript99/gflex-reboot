@@ -1,0 +1,3 @@
+[submodule "NSFlexLib"]
+	path = NSFlexLib
+	url = git@github.com:neoscript99/NSFlexLib.git
