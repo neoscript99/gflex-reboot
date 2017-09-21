@@ -18,4 +18,5 @@
 	<modules:User name="User"/>
 	<modules:Note name="Note"/>
 	<modules:Param name="Param"/>
+	<modules:ComingModule name="ComingModule"/>
 </mx:ViewStack>
