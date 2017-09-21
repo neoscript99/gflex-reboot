@@ -10,4 +10,4 @@ bin/
 *.iws  
 out/  
 *.log.*  
-gflex-reboot-base.iml  
+gflex-reboot.iml

@@ -1,3 +1,32 @@
+allprojects {
+    buildscript {
+        ext {
+            springBootVersion = '1.5.4.RELEASE'
+            gormVersion = '6.1.4.RELEASE'
+            blazedsVersion = '4.7.3'
+        }
+        repositories {
+            maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+            jcenter()
+        }
+    }
+
+    apply plugin: 'groovy'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        jcenter()
+    }
+
+    dependencies {
+        compile 'org.codehaus.groovy:groovy-all:2.4.11'
+        // Use the awesome Spock testing and specification framework
+        testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    }
+}
 /*可在 .idea/modules.xml 中手工添加如下flex模块
 <module fileurl="file://D:/Java/git_repo/ns-flex/NSFlexLib/NSFlexLib.iml" filepath="D:/Java/git_repo/ns-flex/NSFlexLib/NSFlexLib.iml" />
 <module fileurl="file://$PROJECT_DIR$/gflex-reboot-ui/gflex-reboot-ui.iml" filepath="$PROJECT_DIR$/gflex-reboot-ui/gflex-reboot-ui.iml" />
