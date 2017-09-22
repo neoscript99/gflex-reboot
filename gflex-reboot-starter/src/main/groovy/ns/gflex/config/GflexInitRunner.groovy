@@ -1,9 +1,16 @@
 package ns.gflex.config
 
+import groovy.util.logging.Slf4j
+import ns.gflex.config.data.InitializeDomian
+import ns.gflex.repositories.GeneralRepository
 import ns.gflex.util.InitializerUtil
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.grails.datastore.mapping.core.Datastore
+import org.springframework.beans.BeansException
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
+import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationContextAware
+import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
@@ -17,14 +24,39 @@ import org.springframework.transaction.annotation.Transactional
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
+@Slf4j
 class GflexInitRunner implements CommandLineRunner {
-    static private Logger log = LoggerFactory.getLogger(GflexInitRunner.class);
+    @Autowired
+    ApplicationContext applicationContext
+    @Autowired
+    GeneralRepository generalRepository
 
     @Override
     @Transactional
     void run(String... strings) throws Exception {
         log.debug("init ns.gflex with params: {}", strings)
-        if (strings.contains('--init'))
-            InitializerUtil.doInit("ns.gflex.config.data")
+        if (strings.contains('--init')) {
+            initStaticList()
+            InitializerUtil.doInit(generalRepository, "ns.gflex.config.data")
+        }
+    }
+
+    /**
+     * 初始化InitializeDomian注解的domain类
+     * @see InitializeDomian
+     */
+    void initStaticList() {
+        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) applicationContext;
+        configurableApplicationContext.getBeansOfType(Datastore).each { String key, Datastore datastore ->
+            datastore.getMappingContext().getPersistentEntities().each {
+                InitializeDomian initializeDomian = it.javaClass.getAnnotation(InitializeDomian)
+                if(initializeDomian) {
+                    println(initializeDomian.value())
+                    it.javaClass.getDeclaredField(initializeDomian.value())
+                    if (it.javaClass.hasProperty(initializeDomian.value()))
+                        println(initializeDomian.value())
+                }
+            }
+        }
     }
 }

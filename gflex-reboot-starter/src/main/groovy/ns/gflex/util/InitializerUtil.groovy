@@ -1,6 +1,7 @@
 package ns.gflex.util
 
 import ns.gflex.config.data.DataInitializer
+import ns.gflex.repositories.GeneralRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.core.annotation.AnnotationAwareOrderComparator
@@ -9,7 +10,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 import org.springframework.core.io.support.ResourcePatternResolver
 import org.springframework.core.type.ClassMetadata
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory
-import org.springframework.core.type.classreading.MetadataReader
 import org.springframework.core.type.classreading.MetadataReaderFactory
 import org.springframework.util.ClassUtils
 import org.springframework.util.SystemPropertyUtils
@@ -21,7 +21,7 @@ import org.springframework.util.SystemPropertyUtils
 class InitializerUtil {
     static private Logger log = LoggerFactory.getLogger(InitializerUtil.class);
 
-    static void doInit(String basePackage, String pattern = "**/*.class") {
+    static void doInit(GeneralRepository generalRepository, String basePackage, String pattern = "**/*.class") {
 
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
@@ -42,15 +42,12 @@ class InitializerUtil {
             initClasses.sort(AnnotationAwareOrderComparator.INSTANCE)
             initClasses.each {
                 log.info("data initialize by {}", it)
-                it.newInstance().init()
+                DataInitializer dataInitializer = it.newInstance()
+                dataInitializer.generalRepository = generalRepository
+                dataInitializer.init()
             }
         } catch (Exception e) {
             log.error("doInit失败", e);
         }
-    }
-
-
-    public static void main(String[] args) {
-        InitializerUtil.doInit("ns.gflex.config.data")
     }
 }

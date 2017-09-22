@@ -1,4 +1,6 @@
-package ns.gflex.config.data;
+package ns.gflex.config.data
+
+import ns.gflex.repositories.GeneralRepository;
 
 /**
  * 实现这个接口，并通过包扫描执行
@@ -29,4 +31,10 @@ interface DataInitializer {
      * @return
      */
     def save(def entity)
+
+    /**
+     * 初始化数据库
+     * @param generalRepository
+     */
+    void setGeneralRepository(GeneralRepository generalRepository)
 }

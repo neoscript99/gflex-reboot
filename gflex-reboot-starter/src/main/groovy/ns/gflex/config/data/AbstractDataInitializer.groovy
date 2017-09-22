@@ -1,13 +1,12 @@
 package ns.gflex.config.data
 
 import ns.gflex.repositories.GeneralRepository
-import ns.gflex.repositories.GormRepository
 
 /**
  * Created by Neo on 2017-08-25.
  */
 abstract class AbstractDataInitializer implements DataInitializer {
-    GeneralRepository generalRepository = new GormRepository()
+    GeneralRepository generalRepository
     List entityList = Collections.synchronizedList(new ArrayList())
 
     /**

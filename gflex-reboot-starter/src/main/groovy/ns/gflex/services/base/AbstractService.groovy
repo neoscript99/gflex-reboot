@@ -62,6 +62,10 @@ abstract class AbstractService<T> {
         generalRepository.saveMap domain, map
     }
 
+    def saveEntity(T t) {
+        generalRepository.saveEntity(t)
+    }
+
     @Transactional(readOnly = true)
     int count(Map param = null) {
         generalRepository.count domain, param

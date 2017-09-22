@@ -1,6 +1,5 @@
 package ns.gflex.repositories
 
-import grails.gorm.DetachedCriteria
 
 /**
  * 数据库操作通用接口
