@@ -1,7 +1,10 @@
 package ns.gflex.config.data
 
+import ns.gflex.config.initialize.InitializeDomian
 import ns.gflex.domain.Department
 import spock.lang.Specification
+
+import java.lang.reflect.Field
 
 /**
  * Created by Neo on 2017-09-22.
@@ -9,11 +12,11 @@ import spock.lang.Specification
 class InitializeDomianSpec extends Specification {
     def 'get value'() {
         given:
-        Class aClass = Department
-
-        when:
         InitializeDomian initializeDomian = Department.getAnnotation(InitializeDomian)
-        println initializeDomian.value()
+        Field initField = Department.getDeclaredField(initializeDomian.value())
+        when:
+        initField.setAccessible(true)
+        println initField.get(Department)
 
         then:
         true

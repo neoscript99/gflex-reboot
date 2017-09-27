@@ -1,4 +1,4 @@
-package ns.gflex.config.data
+package ns.gflex.config.initialize
 
 import ns.gflex.repositories.GeneralRepository;
 

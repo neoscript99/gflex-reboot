@@ -2,7 +2,7 @@ package ns.gflex.domain
 
 import grails.gorm.annotation.Entity
 import groovy.transform.ToString
-import ns.gflex.config.data.InitializeDomian
+import ns.gflex.config.initialize.InitializeDomian
 
 @Entity
 @ToString(includePackage = false, includes = 'name')

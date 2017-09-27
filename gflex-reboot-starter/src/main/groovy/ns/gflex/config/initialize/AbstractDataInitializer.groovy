@@ -1,10 +1,12 @@
-package ns.gflex.config.data
+package ns.gflex.config.initialize
 
+import groovy.util.logging.Slf4j
 import ns.gflex.repositories.GeneralRepository
 
 /**
  * Created by Neo on 2017-08-25.
  */
+@Slf4j
 abstract class AbstractDataInitializer implements DataInitializer {
     GeneralRepository generalRepository
     List entityList = Collections.synchronizedList(new ArrayList())
@@ -14,8 +16,12 @@ abstract class AbstractDataInitializer implements DataInitializer {
      */
     @Override
     void init() {
-        if (!isInited())
+        if (!isInited()) {
+            def className=this.class.simpleName
+            log.debug("$className 初始化开始")
             doInit();
+            log.debug("$className 初始化完成")
+        }
     }
 
     /**

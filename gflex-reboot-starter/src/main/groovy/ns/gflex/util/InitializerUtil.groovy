@@ -1,6 +1,6 @@
 package ns.gflex.util
 
-import ns.gflex.config.data.DataInitializer
+import ns.gflex.config.initialize.DataInitializer
 import ns.gflex.repositories.GeneralRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -34,7 +34,7 @@ class InitializerUtil {
             for (Resource resource : resources) {
                 ClassMetadata metadata = metadataReaderFactory.getMetadataReader(resource).getClassMetadata()
                 if (metadata && metadata.isConcrete()
-                        && metadata.getInterfaceNames().contains('ns.gflex.config.data.DataInitializer')) {
+                        && metadata.getInterfaceNames().contains('ns.gflex.config.initialize.DataInitializer')) {
                     String cls = metadata.getClassName()
                     initClasses << Class.forName(cls)
                 }

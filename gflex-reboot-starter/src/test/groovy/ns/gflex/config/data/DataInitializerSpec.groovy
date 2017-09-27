@@ -17,14 +17,14 @@ class DataInitializerSpec extends Specification {
 
     def "GFlexData init test"() {
         given:
-        ParamInitializer paramInitializer = new ParamInitializer()
-        paramInitializer.generalRepository = persistenceService
+        MenuInitializer menuInitializer = new MenuInitializer()
+        menuInitializer.generalRepository = persistenceService
 
         when:
-        paramInitializer.init()
-        println(paramInitializer.entityList)
+        menuInitializer.init()
+        println(menuInitializer.entityList)
 
         then:
-        paramInitializer.entityList.size() == 3
+        menuInitializer.entityList
     }
 }

@@ -1,5 +1,7 @@
 package ns.gflex.config.data
 
+import ns.gflex.config.initialize.AbstractDataInitializer
+import ns.gflex.config.initialize.DataInitializer
 import ns.gflex.domain.Menu
 import ns.gflex.domain.Role
 import ns.gflex.domain.association.RoleMenu
@@ -18,18 +20,15 @@ class MenuInitializer extends AbstractDataInitializer implements DataInitializer
 
     void doInit() {
 
-        def roleAdmin = generalRepository.findFirst(Role, [eq: [['roleCode', 'Administrators']]])
-        def rolePublic = generalRepository.findFirst(Role, [eq: [['roleCode', 'Public']]])
-
         def rootMenu = save(new Menu(label: 'Root', app: ''))
 
         initAdminMenu(rootMenu.id).each {
             save(it)
-            save(new RoleMenu(role: roleAdmin, menu: it))
+            save(new RoleMenu(role: Role.ADMINISTRATORS, menu: it))
         }
         initPublicMenu(rootMenu.id).each {
             save(it)
-            save(new RoleMenu(role: rolePublic, menu: it))
+            save(new RoleMenu(role: Role.PUBLIC, menu: it))
         }
     }
 
