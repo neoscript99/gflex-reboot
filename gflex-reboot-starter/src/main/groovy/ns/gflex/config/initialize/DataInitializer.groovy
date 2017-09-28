@@ -3,7 +3,9 @@ package ns.gflex.config.initialize
 import ns.gflex.repositories.GeneralRepository;
 
 /**
- * 实现这个接口，并通过包扫描执行
+ * DataInitializer方式数据初始化接口类
+ * <p>必须显示实现这个接口，并通过包扫描执行
+ * <p>通过org.springframework.core.annotation.Order实现顺序执行
  * Created by Neo on 2017-08-22.
  */
 

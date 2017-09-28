@@ -13,9 +13,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 class GflexBootApplication {
     @Autowired
     ApplicationArguments applicationArguments
-    CliBuilder cliBuilder = new CliBuilder(usage: this.class.name)
+    CliBuilder cliBuilder
 
     GflexBootApplication() {
+        cliBuilder = new CliBuilder(usage: this.class.name)
         buildCliOptions()
     }
 
@@ -31,10 +32,14 @@ class GflexBootApplication {
             SpringApplication.run(this.class, args);
     }
 
-
+    /**
+     * 参数配置
+     * <p>如需自定义命令行参数，可重载本方法
+     */
     void buildCliOptions() {
         cliBuilder.with {
-            _(longOpt: 'init', args: Option.UNLIMITED_VALUES, optionalArg: true, argName: '0~n个初始化方案', '传入本参数，执行初始化，同时如果传入profiles执行对应的多套初始化方案，[default]方案默认执行')
+            _(longOpt: 'init', args: Option.UNLIMITED_VALUES, optionalArg: true, argName: '0~n个初始化方案',
+                    '传入本参数，执行初始化，同时如果传入profiles执行对应的多套初始化方案，[default]方案默认执行')
             _(longOpt: 'help', args: 0, '显示命令行帮助')
         }
     }

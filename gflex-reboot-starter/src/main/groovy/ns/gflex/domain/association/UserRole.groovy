@@ -1,11 +1,15 @@
 package ns.gflex.domain.association
 
 import grails.gorm.annotation.Entity
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 import ns.gflex.config.initialize.InitializeDomian
 import ns.gflex.domain.*;
 
 @Entity
 @InitializeDomian(depends = [User, Role])
+@ToString(includes = ['role', 'user'])
+@EqualsAndHashCode(includes = ['role', 'user'])
 class UserRole implements Serializable {
 
     Role role
@@ -21,6 +25,5 @@ class UserRole implements Serializable {
     }
     static initList = [
             (new UserRole(user: User.ADMIN, role: Role.ADMINISTRATORS)),
-            (new UserRole(user: User.ADMIN, role: Role.PUBLIC)),
-            (new UserRole(user: User.ANONYMOUS, role: Role.PUBLIC)),]
+            (new UserRole(user: User.ANONYMOUS, role: Role.PUBLIC))]
 }

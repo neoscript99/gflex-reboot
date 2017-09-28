@@ -16,9 +16,14 @@ import ns.gflex.config.initialize.InitializeDomian
 @EqualsAndHashCode(includes = 'roleCode')
 @InitializeDomian
 class Role {
+    //管理员，所有菜单权限
     static final Role ADMINISTRATORS = new Role(roleName: 'Administrators', roleCode: 'Administrators',
             editable: false, description: 'System Administrators.')
 
+    static final Role NORMAL_USERS = new Role(roleName: 'NormalUsers', roleCode: 'NormalUsers',
+            editable: false, description: 'Normal users has user related menus.')
+
+    //公开用户，可支持匿名用户查看网站通知等开放功能
     static final Role PUBLIC = new Role(roleName: 'Public', roleCode: 'Public',
             editable: false, description: 'Public role associate with public menus.')
 
@@ -33,5 +38,5 @@ class Role {
         roleCode unique: true
     }
 
-    static initList = [ADMINISTRATORS, PUBLIC]
+    static initList = [ADMINISTRATORS, NORMAL_USERS, PUBLIC]
 }

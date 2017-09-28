@@ -10,7 +10,7 @@ import org.springframework.core.annotation.Order
 /**
  * Created by Neo on 2017-08-22.
  */
-@Order(400)
+@Order(100)
 class MenuInitializer extends AbstractDataInitializer implements DataInitializer {
 
     @Override
@@ -26,9 +26,16 @@ class MenuInitializer extends AbstractDataInitializer implements DataInitializer
             save(it)
             save(new RoleMenu(role: Role.ADMINISTRATORS, menu: it))
         }
+        initNormalUsersMenu(rootMenu.id).each {
+            save(it)
+            save(new RoleMenu(role: Role.NORMAL_USERS, menu: it))
+            save(new RoleMenu(role: Role.ADMINISTRATORS, menu: it))
+        }
         initPublicMenu(rootMenu.id).each {
             save(it)
             save(new RoleMenu(role: Role.PUBLIC, menu: it))
+            save(new RoleMenu(role: Role.NORMAL_USERS, menu: it))
+            save(new RoleMenu(role: Role.ADMINISTRATORS, menu: it))
         }
     }
 
@@ -36,11 +43,17 @@ class MenuInitializer extends AbstractDataInitializer implements DataInitializer
         def sys = save(new Menu(label: '系统设置', app: '', seq: 90, parentId: rootId))
 
         [
-                new Menu(label: '用户设置', app: 'Profile', seq: 99, parentId: rootId),
                 new Menu(label: '帐号管理', app: 'User', seq: 2, parentId: sys.id),
                 new Menu(label: '角色管理', app: 'Role', seq: 1, parentId: sys.id),
                 new Menu(label: '发布通知', app: 'Note', seq: 3, parentId: sys.id),
                 new Menu(label: '参数维护', app: 'Param', seq: 4, parentId: sys.id)
+        ]
+    }
+
+    private List initNormalUsersMenu(Long rootId) {
+
+        [
+                new Menu(label: '用户设置', app: 'Profile', seq: 99, parentId: rootId)
         ]
     }
 
