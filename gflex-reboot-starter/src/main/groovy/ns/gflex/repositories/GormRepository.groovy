@@ -2,6 +2,7 @@ package ns.gflex.repositories
 
 import grails.gorm.DetachedCriteria
 import ns.gflex.util.JsonUtil
+import org.grails.datastore.gorm.GormEntity
 import org.hibernate.criterion.CriteriaSpecification
 import org.hibernate.criterion.Projections
 import org.slf4j.Logger
@@ -46,21 +47,25 @@ class GormRepository implements GeneralRepository {
      */
     @Override
     public <T> T saveMap(Class<T> domain, Map map) {
-        saveMap(domain, map, false)
+        GormEntity newEntity = JsonUtil.mapToBean(map, domain)
+        if (newEntity.ident())
+            saveTransietEntity(newEntity)
+        else
+            saveEntity(newEntity)
     }
+
     /**
-     * @see ns.gflex.repositories.GeneralRepository#saveMap(Class, Map, boolean)
+     * @see GeneralRepository#saveTransietEntity
      */
-    public <T> T saveMap(Class<T> domain, Map map, boolean isMerge) {
-        def newEntity = JsonUtil.mapToBean(map, domain)
-        log.debug("save new entity: {}", newEntity.dump())
-        if (map.id) {
-            //原来的代码newEntity是离线的，会触发beforeInsert，导致dateCreated更新，其实是update
-            def oldEntity = domain.get(map.id)
-            BeanUtils.copyProperties(newEntity, oldEntity, ['id', 'version', 'metaClass'].toArray(new String[0]))
-            saveEntity(oldEntity, isMerge)
-        } else
-            saveEntity(newEntity, isMerge)
+    Object saveTransietEntity(Object entity) {
+        GormEntity transietEntity = entity as GormEntity;
+        GormEntity attachedEntity = transietEntity.class.get(transietEntity.ident())
+        if (attachedEntity) {//update
+            BeanUtils.copyProperties(transietEntity, attachedEntity,
+                    ['id', 'version', 'metaClass'].toArray(new String[0]))
+            saveEntity(attachedEntity)
+        } else //insert
+            saveEntity(transietEntity)
     }
 
     /**
@@ -148,35 +153,29 @@ class GormRepository implements GeneralRepository {
      * @see GeneralRepository#saveEntity(Object)
      */
     @Override
-    def saveEntity(def entity) {
-        saveEntity(entity, false)
-    }
-    /**
-     * 原先不是merge有问题，新版本先测试下，本方法先隐藏
-     * @see GeneralRepository#saveEntity(Object, boolean)
-     */
-    def saveEntity(def entity, boolean isMerge) {
-        log.info "saving  ${entity.class}"
+    def saveEntity(Object entity) {
+        log.info "saveEntity  ${entity.class}"
 
+        GormEntity gormEntity = entity as GormEntity;
         //错误信息可能在中间过程中产生，末状态正确时不一定为空，所以必须先清理
-        entity.clearErrors()
-        if (entity.validate()) {
+        gormEntity.clearErrors()
+        if (gormEntity.validate()) {
             /* 如果存在unique限制，当save为update时导致NonUniqueObjectException异常
              * 原因是查询是否唯一时，导致session有两个id相同对象，grails目前处理不够好。
              * 如果用entity.merge()，部分功能，如autoTimeStrape无法自动完成
-             * 暂时通过清空session处理
+             * 也可通过清空session处理
+             * 20170929 新版gorm中没有发现这个问题，isMerge暂不使用
+             *
+			 * if(isMerge){
+			 * 	entity.merge()
+		     * }
              * */
-            if (!isMerge) {
-                log.debug "save ${entity.class} ${entity}"
-                entity.save()
-            } else {
-                log.debug "merge ${entity.class} ${entity}"
-                entity.merge()
-            }
+            log.debug "saveEntity ${gormEntity}"
+            gormEntity.save()
         } else {
             StringBuilder sb = new StringBuilder()
-            entity.errors.allErrors.each {
-                String msg = MessageFormat.format(it.defaultMessage, it.arguments);
+            gormEntity.errors.allErrors.each {
+                String msg = it.defaultMessage ? MessageFormat.format(it.defaultMessage, it.arguments) : it.toString();
                 log.error(msg)
                 log.debug(it.toString())
                 sb.append("$msg\n")

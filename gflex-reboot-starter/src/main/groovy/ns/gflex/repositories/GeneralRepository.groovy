@@ -29,7 +29,7 @@ interface GeneralRepository {
      * @param domain
      * @return
      */
-    public <T> T get(Class<T> domain, def id)
+    public <T> T get(Class<T> domain, Object id)
 
     /**
      * 返回查询结果第一个元素，根据唯一键查询时有用
@@ -78,13 +78,21 @@ interface GeneralRepository {
      * @param entity
      * @return
      */
-    def saveEntity(def entity)
+    Object saveEntity(Object entity)
+
+
+    /**
+     * save or update离线实体类
+     * @param entity
+     * @return
+     */
+    Object saveTransietEntity(Object entity)
 
     /**
      * 删除单个记录
      * @param entity
      */
-    void delete(def entity)
+    void delete(Object entity)
 
     /**
      * 根据id删除对应的记录
@@ -92,7 +100,7 @@ interface GeneralRepository {
      * @param id
      * @return 操作记录数
      */
-    Number deleteById(Class domain, def id)
+    Number deleteById(Class domain, Object id)
 
     /**
      * 根据id列表删除对应的记录

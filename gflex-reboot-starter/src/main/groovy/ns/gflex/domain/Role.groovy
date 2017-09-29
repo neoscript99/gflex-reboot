@@ -32,7 +32,11 @@ class Role {
     String description
     Boolean editable = true
     Boolean enabled = true
-
+    Date dateCreated
+    Date lastUpdated
+    static mapping = {
+        autoTimestamp true
+    }
     static constraints = {
         description nullable: true, maxSize: 128
         roleCode unique: true
