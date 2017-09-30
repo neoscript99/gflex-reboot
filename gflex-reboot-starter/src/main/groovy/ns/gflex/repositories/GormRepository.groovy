@@ -1,13 +1,14 @@
 package ns.gflex.repositories
 
 import grails.gorm.DetachedCriteria
+import groovy.util.logging.Slf4j
 import ns.gflex.util.JsonUtil
 import org.grails.datastore.gorm.GormEntity
+import org.hibernate.SessionFactory
 import org.hibernate.criterion.CriteriaSpecification
 import org.hibernate.criterion.Projections
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.BeanUtils
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 import java.text.MessageFormat
@@ -19,9 +20,10 @@ import java.text.MessageFormat
  * Created by Neo on 2017-08-25.
  */
 @Service
+@Slf4j
 class GormRepository implements GeneralRepository {
-    static Logger log = LoggerFactory.getLogger(GormRepository.class)
-
+    @Autowired
+    SessionFactory sessionFactory
     /**
      * @see GeneralRepository#get
      */
@@ -186,6 +188,13 @@ class GormRepository implements GeneralRepository {
             }
             throw new RuntimeException(sb.toString())
         }
+    }
+
+    /**
+     * @see GeneralRepository#flush
+     */
+    def flush() {
+        sessionFactory.currentSession.flush()
     }
 
     /**

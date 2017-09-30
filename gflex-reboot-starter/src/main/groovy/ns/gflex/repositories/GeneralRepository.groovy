@@ -126,4 +126,10 @@ interface GeneralRepository {
      * @return 操作记录数
      */
     Number updateMatch(Class domain, Map param, Map properties)
+
+    /**
+     * 将内存中的实例同步到数据库
+     * @return
+     */
+    def flush()
 }
