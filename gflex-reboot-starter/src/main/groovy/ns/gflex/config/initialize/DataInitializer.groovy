@@ -1,6 +1,7 @@
 package ns.gflex.config.initialize
 
-import ns.gflex.repositories.GeneralRepository;
+import ns.gflex.repositories.GeneralRepository
+import org.springframework.context.ApplicationContext;
 
 /**
  * DataInitializer方式数据初始化接口类
@@ -39,4 +40,6 @@ interface DataInitializer {
      * @param generalRepository
      */
     void setGeneralRepository(GeneralRepository generalRepository)
+    void setApplicationContext(ApplicationContext applicationContext)
+
 }

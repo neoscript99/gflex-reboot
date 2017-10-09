@@ -2,6 +2,7 @@ package ns.gflex.config.initialize
 
 import groovy.util.logging.Slf4j
 import ns.gflex.repositories.GeneralRepository
+import org.springframework.context.ApplicationContext
 
 /**
  * Created by Neo on 2017-08-25.
@@ -9,6 +10,7 @@ import ns.gflex.repositories.GeneralRepository
 @Slf4j
 abstract class AbstractDataInitializer implements DataInitializer {
     GeneralRepository generalRepository
+    ApplicationContext applicationContext
     List entityList = Collections.synchronizedList(new ArrayList())
 
     /**

@@ -1,6 +1,5 @@
 package ns.gflex.repositories
 
-
 /**
  * 数据库操作通用接口
  * <p>本接口中用到的查询条件通过map来传递，map的key为数据库操作符（可嵌套），value为操作数（多个的话用list）
@@ -80,9 +79,8 @@ interface GeneralRepository {
      */
     Object saveEntity(Object entity)
 
-
     /**
-     * save or update离线实体类
+     * update离线(id存在)实体类必须使用本方法
      * @param entity
      * @return
      */

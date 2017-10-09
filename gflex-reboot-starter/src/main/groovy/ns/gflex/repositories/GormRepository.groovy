@@ -140,7 +140,10 @@ class GormRepository implements GeneralRepository {
      */
     @Override
     Number deleteMatch(Class domain, Map param) {
-        buildDetachedCriteria(domain, param).deleteAll()
+        if (param)
+            buildDetachedCriteria(domain, param).deleteAll()
+        else
+            sessionFactory.currentSession.createQuery("delete from $domain.name").executeUpdate()
     }
 
     /**
@@ -254,8 +257,8 @@ class GormRepository implements GeneralRepository {
      * @return
      * @see grails.orm.HibernateCriteriaBuilder
      */
-    protected DetachedCriteria buildDetachedCriteria(Class domain, Map param) {
+    protected DetachedCriteria buildDetachedCriteria(Class<GormEntity> domain, Map param) {
         log.info("$domain : $param")
-        return new DetachedCriteria(domain).build(makeCriteria(param))
+        new DetachedCriteria(domain).build(makeCriteria(param))
     }
 }

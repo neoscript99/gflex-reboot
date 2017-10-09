@@ -4,6 +4,7 @@ import ns.gflex.config.initialize.DataInitializer
 import ns.gflex.repositories.GeneralRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.context.ApplicationContext
 import org.springframework.core.annotation.AnnotationAwareOrderComparator
 import org.springframework.core.io.Resource
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
@@ -21,7 +22,7 @@ import org.springframework.util.SystemPropertyUtils
 class InitializerUtil {
     static private Logger log = LoggerFactory.getLogger(InitializerUtil.class);
 
-    static void doInit(GeneralRepository generalRepository, String basePackage, String pattern = "**/*.class") {
+    static void doInit(GeneralRepository generalRepository, ApplicationContext applicationContext, String basePackage, String pattern = "**/*.class") {
 
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
@@ -44,6 +45,7 @@ class InitializerUtil {
                 log.info("data initialize by {}", it)
                 DataInitializer dataInitializer = it.newInstance()
                 dataInitializer.generalRepository = generalRepository
+                dataInitializer.applicationContext = applicationContext
                 dataInitializer.init()
             }
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import ns.gflex.repositories.GeneralRepository
 import ns.gflex.util.InitializerUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
+import org.springframework.context.ApplicationContext
 import org.springframework.transaction.annotation.Transactional
 
 /**
@@ -15,6 +16,8 @@ abstract class AbstractDataInitializerRunner implements CommandLineRunner {
     @Autowired
     GeneralRepository generalRepository
     @Autowired
+    ApplicationContext applicationContext
+    @Autowired
     OptionAccessor optionAccessor
 
     @Override
@@ -22,7 +25,7 @@ abstract class AbstractDataInitializerRunner implements CommandLineRunner {
     void run(String... args) throws Exception {
         log.debug("$basePackage 中DataInitializer方式数据初始化开始")
         if (optionAccessor.init) {
-            InitializerUtil.doInit(generalRepository, basePackage)
+            InitializerUtil.doInit(generalRepository, applicationContext, basePackage)
         }
         log.debug("$basePackage 中DataInitializer方式数据初始化完成")
     }

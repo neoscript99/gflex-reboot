@@ -20,6 +20,7 @@ import java.lang.reflect.Type
 @Transactional
 abstract class AbstractService<T> {
     @Autowired
+    @Delegate(interfaces = false,includes = "saveEntity,saveTransietEntity")
     GeneralRepository generalRepository
 
     protected Logger log = LoggerFactory.getLogger(this.getClass())
@@ -60,14 +61,6 @@ abstract class AbstractService<T> {
     def save(Map map) {
         log.debug("save map: {}", map)
         generalRepository.saveMap domain, map
-    }
-
-    def saveEntity(T t) {
-        generalRepository.saveEntity(t)
-    }
-
-    def saveTransietEntity(T t) {
-        generalRepository.saveTransietEntity(t)
     }
 
     @Transactional(readOnly = true)
