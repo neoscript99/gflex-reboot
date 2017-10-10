@@ -28,6 +28,7 @@ interface DataInitializer {
      * 判断并执行初始
      */
     void init()
+
     /**
      * 初始化过程中保存实例到数据库
      * @param entity
@@ -40,6 +41,7 @@ interface DataInitializer {
      * @param generalRepository
      */
     void setGeneralRepository(GeneralRepository generalRepository)
+
     void setApplicationContext(ApplicationContext applicationContext)
 
 }

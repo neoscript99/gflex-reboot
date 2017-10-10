@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationContext
 abstract class AbstractDataInitializer implements DataInitializer {
     GeneralRepository generalRepository
     ApplicationContext applicationContext
-    List entityList = Collections.synchronizedList(new ArrayList())
 
     /**
      * 判断并执行初始
@@ -19,7 +18,7 @@ abstract class AbstractDataInitializer implements DataInitializer {
     @Override
     void init() {
         if (!isInited()) {
-            def className=this.class.simpleName
+            def className = this.class.simpleName
             log.debug("$className 初始化开始")
             doInit();
             log.debug("$className 初始化完成")
@@ -35,8 +34,10 @@ abstract class AbstractDataInitializer implements DataInitializer {
      */
     @Override
     def save(def entity) {
-        entityList.add(entity)
         generalRepository.saveEntity(entity)
-        entity
+    }
+
+    def saveList(List entityList) {
+        entityList.each { save(it) }
     }
 }
