@@ -20,7 +20,7 @@ import java.lang.reflect.Type
 @Transactional
 abstract class AbstractService<T> {
     @Autowired
-    @Delegate(interfaces = false,includes = "saveEntity,saveTransietEntity")
+    @Delegate(interfaces = false, includes = "saveEntity,saveTransietEntity")
     GeneralRepository generalRepository
 
     protected Logger log = LoggerFactory.getLogger(this.getClass())
@@ -42,8 +42,10 @@ abstract class AbstractService<T> {
      */
     @Transactional(readOnly = true)
     List<T> list(Map param = null) {
-        if (!(param && param.order) && defaultOrder)
-            param = [order: defaultOrder] << param
+        if (defaultOrder) {
+            param = param ?: [:]
+            param.order = param.order ?: defaultOrder
+        }
         generalRepository.list domain, param
     }
 
