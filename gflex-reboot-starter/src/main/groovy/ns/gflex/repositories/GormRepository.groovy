@@ -1,6 +1,8 @@
 package ns.gflex.repositories
 
 import grails.gorm.DetachedCriteria
+import groovy.transform.CompileStatic
+import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
 import ns.gflex.util.JsonUtil
 import org.grails.datastore.gorm.GormEntity
@@ -21,6 +23,7 @@ import java.text.MessageFormat
  */
 @Service
 @Slf4j
+@CompileStatic(TypeCheckingMode.SKIP)
 class GormRepository implements GeneralRepository {
     @Autowired
     SessionFactory sessionFactory
