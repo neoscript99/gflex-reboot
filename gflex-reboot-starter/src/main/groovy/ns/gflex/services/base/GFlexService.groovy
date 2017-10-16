@@ -72,7 +72,7 @@ abstract class GFlexService {
         log.info("save map isMerge:{} , domain:{}", isMerge, domain)
         log.debug("save map: {}", map)
         authorityCheck()
-        generalRepository.saveMap forDomain(domain), map, isMerge
+        generalRepository.saveMap forDomain(domain), map//, isMerge 2017新版不再处理merge
     }
 
     @Transactional(readOnly = true)
@@ -111,7 +111,8 @@ abstract class GFlexService {
 
     protected def saving(def entity, boolean isMerge = false) {
         authorityCheck()
-        generalRepository.saveEntity(entity, isMerge)
+        //2017新版不再处理是否merge  generalRepository.saveEntity(entity, isMerge)
+        generalRepository.saveEntity(entity)
     }
 
     /**
