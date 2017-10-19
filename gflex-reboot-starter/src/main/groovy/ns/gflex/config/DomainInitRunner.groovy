@@ -7,10 +7,12 @@ import ns.gflex.config.initialize.InitializeOrder
 import ns.gflex.repositories.GeneralRepository
 import org.grails.datastore.mapping.core.Datastore
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.core.annotation.Order
+import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -34,16 +36,17 @@ class DomainInitRunner implements CommandLineRunner {
     @Autowired
     GeneralRepository generalRepository
     @Autowired
-    OptionAccessor optionAccessor
+    Environment environment;
+    @Autowired
+    ApplicationArguments applicationArguments
 
     @Override
     @Transactional
     void run(String... args) throws Exception {
         log.debug("init ns.gflex with params: {}", args)
-        if (optionAccessor.init) {
+        if (applicationArguments.containsOption('init')) {
             def profiles = Sets.newHashSet('default')
-            if (Collection.isAssignableFrom(optionAccessor.inits.class))
-                profiles.addAll(optionAccessor.inits)
+            profiles.addAll(environment.getActiveProfiles())
             initStaticList(profiles)
         }
     }

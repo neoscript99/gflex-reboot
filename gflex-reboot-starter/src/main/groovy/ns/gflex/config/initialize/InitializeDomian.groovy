@@ -15,7 +15,7 @@ import java.lang.annotation.Target
  *     <li>数据库中不存在任何记录
  * </ul>
  * <p>depends代表依赖类，必须在这个类之后做初始化
- * <p>profiles可对应命令行--init所对应的参数，实现多套方案的初始化需求
+ * <p>profiles对应spring.profiles.active所对应的参数，实现多套方案的初始化需求
  * Created by Neo on 2017-09-22.
  */
 @Documented
