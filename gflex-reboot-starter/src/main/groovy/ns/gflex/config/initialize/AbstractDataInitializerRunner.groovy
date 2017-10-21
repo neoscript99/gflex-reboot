@@ -24,11 +24,11 @@ abstract class AbstractDataInitializerRunner implements CommandLineRunner {
     @Override
     @Transactional
     void run(String... args) throws Exception {
-        log.debug("$basePackage 中DataInitializer方式数据初始化开始")
         if (applicationArguments.containsOption('init')) {
+            log.debug("$basePackage 中DataInitializer方式数据初始化开始")
             InitializerUtil.doInit(generalRepository, applicationContext, basePackage)
+            log.debug("$basePackage 中DataInitializer方式数据初始化完成")
         }
-        log.debug("$basePackage 中DataInitializer方式数据初始化完成")
     }
 
     abstract String getBasePackage()

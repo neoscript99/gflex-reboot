@@ -43,7 +43,6 @@ class DomainInitRunner implements CommandLineRunner {
     @Override
     @Transactional
     void run(String... args) throws Exception {
-        log.debug("init ns.gflex with params: {}", args)
         if (applicationArguments.containsOption('init')) {
             def profiles = Sets.newHashSet('default')
             profiles.addAll(environment.getActiveProfiles())
