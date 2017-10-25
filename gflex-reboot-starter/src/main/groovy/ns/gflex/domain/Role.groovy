@@ -35,7 +35,6 @@ class Role {
     Date dateCreated
     Date lastUpdated
     static mapping = {
-        autoTimestamp true
     }
     static constraints = {
         description nullable: true, maxSize: 128

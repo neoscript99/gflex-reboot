@@ -20,7 +20,6 @@ import java.lang.reflect.Type
 @Transactional
 abstract class AbstractService<T> {
     @Autowired
-    @Delegate(interfaces = false, includes = "saveEntity,saveTransietEntity")
     GeneralRepository generalRepository
 
     protected Logger log = LoggerFactory.getLogger(this.getClass())

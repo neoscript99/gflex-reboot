@@ -20,7 +20,7 @@ class MenuInitializer extends AbstractDataInitializer implements DataInitializer
 
     void doInit() {
 
-        def rootMenu = save(new Menu(label: 'Root', app: ''))
+        def rootMenu = save(new Menu(label: 'Root', ))
 
         initAdminMenu(rootMenu.id).each {
             save(it)
@@ -40,7 +40,7 @@ class MenuInitializer extends AbstractDataInitializer implements DataInitializer
     }
 
     private List initAdminMenu(Long rootId) {
-        def sys = save(new Menu(label: '系统设置', app: '', seq: 90, parentId: rootId))
+        def sys = save(new Menu(label: '系统设置', seq: 90, parentId: rootId))
 
         [
                 new Menu(label: '帐号管理', app: 'User', seq: 2, parentId: sys.id),

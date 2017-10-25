@@ -48,6 +48,14 @@ class GormRepository implements GeneralRepository {
     }
 
     /**
+     * @see GeneralRepository#findByExample
+     */
+    @Override
+    public <T> List<T> findByExample(T example) {
+        example.class.findAll(example)
+    }
+
+    /**
      * @see ns.gflex.repositories.GeneralRepository#saveMap(Class, Map)
      */
     @Override
@@ -63,9 +71,14 @@ class GormRepository implements GeneralRepository {
      * @see GeneralRepository#saveTransietEntity
      */
     Object saveTransietEntity(Object entity) {
+        log.debug("saveTransietEntity $entity")
         GormEntity transietEntity = entity as GormEntity;
         GormEntity attachedEntity = transietEntity.class.get(transietEntity.ident())
+
         if (attachedEntity) {//update
+            if (attachedEntity.hasProperty('version'))
+                log.debug("old version is $attachedEntity.version")
+
             BeanUtils.copyProperties(transietEntity, attachedEntity,
                     ['id', 'version', 'metaClass'].toArray(new String[0]))
             saveEntity(attachedEntity)

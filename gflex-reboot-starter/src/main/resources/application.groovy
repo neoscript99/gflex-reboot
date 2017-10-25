@@ -1,9 +1,8 @@
 grails.gorm.default.mapping = {
     //cache true
-    id generator: 'uuid'
+    //id generator: 'uuid'
     autoTimestamp true
-    /* version 为true时，自己new的domian类不能update，只能insert，因为version值不知道
-     * 一般在高并发时使用version*/
+    /* version用来做乐观锁，如果是并发修改控制比较松的管理系统，可以不用 */
     version false
 }
 

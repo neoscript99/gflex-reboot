@@ -39,6 +39,14 @@ interface GeneralRepository {
     public <T> T findFirst(Class<T> domain, Map param)
 
     /**
+     * query by example
+     * 不支持属性嵌套
+     * @param example
+     * @return
+     */
+    public <T> List<T> findByExample(T example)
+
+    /**
      * 通过map生成domain，并保存，同时支持insert和update，根据是否包含id字段自动执行
      * @param map
      * @param isMerge

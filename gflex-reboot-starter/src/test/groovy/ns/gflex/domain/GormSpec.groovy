@@ -48,15 +48,25 @@ class GormSpec extends Specification {
         given:
         Role resultRole = generalRepository.saveMap(Role, savedMap)
 
-        expect:'插入数据库时更新lastUpdated，entity中不会改变'
+        expect: '插入数据库时更新lastUpdated，entity中不会改变'
         resultRole.lastUpdated == resultRole.dateCreated
     }
 
     def 'check autoTimestamp'() {
         given:
-        Role resultRole = generalRepository.get(Role,savedMap.id)
+        Role resultRole = generalRepository.get(Role, savedMap.id)
 
         expect:
         resultRole.lastUpdated > resultRole.dateCreated
+    }
+
+    def 'find by example'() {
+        given:
+        def ex = new Role(roleName: savedMap.roleName, editable: null, enabled: null)
+        def roleList = generalRepository.findByExample(ex)
+        def userList = generalRepository.findByExample(User.ADMIN)
+        expect:
+        roleList.size() > 0
+        !userList
     }
 }

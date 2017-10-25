@@ -16,6 +16,7 @@ dependencies {
     compile group: 'com.h2database', name: 'h2', version: '1.4.195'
     //compile 'com.alibaba:druid-spring-boot-starter:1.1.2'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.16'
+    testCompile group: 'commons-cli', name: 'commons-cli', version: '1.4'
 }
 
 springBoot {

@@ -16,7 +16,6 @@ class Log {
     Date dateCreated
     static mapping = {
         id generator: 'increment'
-        autoTimestamp true
     }
 
     static constraints = {

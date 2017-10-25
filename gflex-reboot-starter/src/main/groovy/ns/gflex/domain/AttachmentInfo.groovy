@@ -17,7 +17,6 @@ class AttachmentInfo {
         id name: 'fileId', generator: 'assigned'
         ownerId index: 'idx_attach_owner'
         dateCreated index: 'idx_attach_date'
-        autoTimestamp true
     }
 
     static constraints = {
