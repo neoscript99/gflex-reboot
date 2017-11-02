@@ -138,4 +138,13 @@ interface GeneralRepository {
      * @return
      */
     def flush()
+
+    /**
+     * 执行语句
+     * <p>可以是sql、hql、jpql
+     * @param ql
+     * @param param
+     * @return 更新记录数
+     */
+    Integer executeUpdate(String ql, Map<String, Object> param)
 }

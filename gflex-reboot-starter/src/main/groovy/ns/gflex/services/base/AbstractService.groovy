@@ -51,11 +51,15 @@ abstract class AbstractService<T> {
     @Transactional(readOnly = true)
     List listEnabled(Map param = null) {
         log.info "listEnabled param:$param"
-        List enable = ['enabled', true]
+        listWithEq(['enabled', true], param)
+    }
+
+    @Transactional(readOnly = true)
+    List listWithEq(List eqParam, Map param = null) {
         if (param)
-            param.eq = param.eq ? param.eq.toList() << enable : [enable]
+            param.eq = param.eq ? param.eq.toList() << eqParam : [eqParam]
         else
-            param = [eq: [enable]]
+            param = [eq: [eqParam]]
         list(param)
     }
 

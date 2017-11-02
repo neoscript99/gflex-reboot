@@ -217,6 +217,14 @@ class GormRepository implements GeneralRepository {
     }
 
     /**
+     * @see GeneralRepository#executeUpdate
+     */
+    Integer executeUpdate(String ql, Map<String, Object> param) {
+        def query = sessionFactory.currentSession.createQuery(ql)
+        param.each { query.setParameter(it.key, it.value) }
+        query.executeUpdate()
+    }
+    /**
      * 使用hibernate criteria 查询
      * <p>本方法为hibernate专用，如需使用需继承本类
      * @param domainClass
