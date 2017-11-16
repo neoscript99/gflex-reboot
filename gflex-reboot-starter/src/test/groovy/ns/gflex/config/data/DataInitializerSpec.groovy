@@ -10,8 +10,12 @@ import spock.lang.Specification
 class DataInitializerSpec extends Specification {
     @Shared
     GeneralRepository persistenceService
-    def setupSpec(){
-        persistenceService  = Stub(GeneralRepository)
+
+    def setupSpec() {
+        persistenceService = Mock(GeneralRepository)
+        persistenceService.saveEntity(_) >> {
+            it[0]
+        }
         persistenceService.count(_, _) >> 0
     }
 
@@ -22,9 +26,9 @@ class DataInitializerSpec extends Specification {
 
         when:
         menuInitializer.init()
-        println(menuInitializer.entityList)
 
+        //被自定义闭包接管，mock方法未调用
         then:
-        menuInitializer.entityList
+        0 * persistenceService.saveEntity(_)
     }
 }
