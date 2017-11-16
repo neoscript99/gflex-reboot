@@ -8,5 +8,5 @@ grails.gorm.default.mapping = {
 
 //maxSize : 32在数据库中表现为字符长度，不是字节，如oracle VARCHAR2(32 CHAR)
 grails.gorm.default.constraints = {
-    '*'(maxSize: 32, blank: false)
+    '*'(maxSize: 32, blank: true)
 }

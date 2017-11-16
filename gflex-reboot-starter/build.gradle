@@ -7,7 +7,6 @@ buildscript {
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 
-
 dependencies {
     compile group: 'org.apache.flex.blazeds', name: 'blazeds-spring-boot-starter', version: "${blazedsVersion}"
     compile(group: 'org.grails', name: 'gorm-hibernate5-spring-boot', version: "${gormVersion}") {
