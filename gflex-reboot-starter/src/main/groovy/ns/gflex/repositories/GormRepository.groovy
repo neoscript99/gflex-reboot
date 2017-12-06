@@ -12,6 +12,7 @@ import org.hibernate.criterion.Projections
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.validation.FieldError
 
 import java.text.MessageFormat
 
@@ -197,8 +198,10 @@ class GormRepository implements GeneralRepository {
             StringBuilder sb = new StringBuilder()
             gormEntity.errors.allErrors.each {
                 String msg = it.defaultMessage ? MessageFormat.format(it.defaultMessage, it.arguments) : it.toString();
+                if (FieldError.isAssignableFrom(it.class))
+                    msg = "[$it.field = $it.rejectedValue]$msg"
                 log.error(msg)
-                log.debug(it.toString())
+                log.error(it.toString())
                 sb.append("$msg\n")
                 //messageBundle配置参考log.error(it)打印的error.code，
                 //如com.beeb.teller.TeTransInfo.transCode.unique.error
