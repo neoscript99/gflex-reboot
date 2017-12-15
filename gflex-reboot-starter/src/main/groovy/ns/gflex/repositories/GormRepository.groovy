@@ -6,6 +6,7 @@ import groovy.transform.TypeCheckingMode
 import groovy.util.logging.Slf4j
 import ns.gflex.util.JsonUtil
 import org.grails.datastore.gorm.GormEntity
+import org.grails.datastore.mapping.model.PersistentEntity
 import org.hibernate.SessionFactory
 import org.hibernate.criterion.CriteriaSpecification
 import org.hibernate.criterion.Projections
@@ -157,10 +158,8 @@ class GormRepository implements GeneralRepository {
      */
     @Override
     Number deleteMatch(Class domain, Map param) {
-        if (param)
-            buildDetachedCriteria(domain, param).deleteAll()
-        else
-            sessionFactory.currentSession.createQuery("delete from $domain.name").executeUpdate()
+        def criteria = buildDetachedCriteria(domain, param)
+        criteria ? criteria.deleteAll() : 0
     }
 
     /**
@@ -168,7 +167,8 @@ class GormRepository implements GeneralRepository {
      */
     @Override
     Number updateMatch(Class domain, Map param, Map properties) {
-        buildDetachedCriteria(domain, param).updateAll(properties)
+        def criteria = buildDetachedCriteria(domain, param)
+        criteria ? criteria.updateAll(properties) : 0
     }
 
     /**
@@ -277,15 +277,30 @@ class GormRepository implements GeneralRepository {
     }
     /**
      * 创建criteria并执行操作
+     *
      * <p>适合批量删除等操作
      * <p>本方法为hibernate专用，如需使用需继承本类
+     * <p>批量update、delete不支持join，gorm的DetachedCriteria暂时也不支持in和exists子查询，所以先分两步执行
      * @param domain
      * @param param
-     * @return
+     * @return 没有满足条件的记录，返回null，调用方无需执行，否则返回in查询的DetachedCriteria
      * @see grails.orm.HibernateCriteriaBuilder
      */
     protected DetachedCriteria buildDetachedCriteria(Class<GormEntity> domain, Map param) {
         log.info("$domain : $param")
-        new DetachedCriteria(domain).build(makeCriteria(param))
+
+        def detachedCriteria = new DetachedCriteria(domain)
+        if (param) {
+            def subQuery = new DetachedCriteria(domain).build(makeCriteria(param)).id();
+            def idList = subQuery.list();
+            //如果子查询没有匹配记录，返回null，调用方无需执行
+            return idList ? detachedCriteria.inList(getIdName(domain), idList) : null
+        } else //批量操作必需包含where子句，所以加一个必真的条件
+            return detachedCriteria.isNotNull(getIdName(domain))
+    }
+
+
+    static getIdName(Class<GormEntity> domain) {
+        (domain.gormPersistentEntity as PersistentEntity).identity.name
     }
 }

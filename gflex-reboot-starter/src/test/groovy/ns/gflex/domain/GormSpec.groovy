@@ -2,6 +2,7 @@ package ns.gflex.domain
 
 import ns.gflex.GflexBootApplication
 import ns.gflex.repositories.GeneralRepository
+import ns.gflex.util.EncoderUtil
 import ns.gflex.util.JsonUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
@@ -68,5 +69,21 @@ class GormSpec extends Specification {
         expect:
         roleList.size() > 0
         !userList
+    }
+
+    def 'update and delete by match'() {
+        given:
+        def dept = new Department(name: '测试', seq: 1)
+        generalRepository.saveEntity(dept)
+        generalRepository.saveEntity((new User(account: 'test1', name: '测试1', dept: dept,
+                editable: false, password: EncoderUtil.md5('admin'))))
+        generalRepository.saveEntity((new User(account: 'test2', name: '测试2', dept: dept,
+                editable: false, password: EncoderUtil.md5('admin'))))
+        expect:
+        generalRepository.updateMatch(User, [dept: [eq: [['id', dept.id]]]], [editable: true]) == 2
+        generalRepository.updateMatch(User, null, [editable: true]) == 2
+        generalRepository.deleteMatch(User, [dept: [eq: [['id', dept.id]]]]) == 2
+        generalRepository.deleteMatch(User, null) == 0
+        generalRepository.deleteMatch(User, [dept: [eq: [['id', -1]]]]) == 0
     }
 }

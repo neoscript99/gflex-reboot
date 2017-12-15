@@ -24,3 +24,9 @@ dependencies {
 springBoot {
     mainClass = 'ns.gflex.GflexBootApplication'
 }
+
+test {
+    systemProperties System.properties
+    systemProperty 'spring.profiles.active', 'dev'
+    //systemProperty 'init', 'true'
+}
