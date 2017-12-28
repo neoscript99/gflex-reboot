@@ -43,7 +43,7 @@ class DomainInitRunner implements CommandLineRunner {
     @Override
     @Transactional
     void run(String... args) throws Exception {
-        if (applicationArguments.containsOption('init') || System.getProperty('init')) {
+        if (applicationArguments.containsOption('init') || System.getProperty('init') != null) {
             def profiles = Sets.newHashSet('default')
             profiles.addAll(environment.getActiveProfiles())
             initStaticList(profiles)

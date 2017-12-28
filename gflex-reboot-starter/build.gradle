@@ -25,6 +25,10 @@ springBoot {
     mainClass = 'ns.gflex.GflexBootApplication'
 }
 
+bootRun {
+    systemProperties System.properties
+}
+
 test {
     systemProperties System.properties
     systemProperty 'spring.profiles.active', 'dev'
