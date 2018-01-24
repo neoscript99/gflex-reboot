@@ -33,3 +33,4 @@ logging:
     ns.gflex: DEBUG
     org.hibernate.engine.transaction: DEBUG
     org.apache.flex.blazeds.Message.RPC: INFO
+    org.apache.flex.blazeds: DEBUG
