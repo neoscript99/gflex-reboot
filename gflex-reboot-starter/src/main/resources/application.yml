@@ -24,7 +24,7 @@ hibernate:
 #https://logback.qos.ch/manual/layouts.html
 #https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-logging.html
 logging:
-  file: "gflex-reboot.log"
+  file: "build/gflex-reboot.log"
   pattern.console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(${PID}){magenta} %clr(---){faint} %clr([%t]){faint} %clr(%-60.60logger{59}){cyan} %clr(:){faint} %m%n    %caller{1}${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
   pattern.file: "%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:%5p} ${PID} --- [%t] %-40.40logger{39} : %m%n    %caller{1}${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
   pattern.level: "%5p"

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Order(InitializeOrder.GFLEX_INIT)
-class GflexInitRunner extends AbstractDataInitializerRunner {
+class GFlexInitRunner extends AbstractDataInitializerRunner {
 
     String getBasePackage() {
         'ns.gflex.config.data'
