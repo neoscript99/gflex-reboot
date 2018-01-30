@@ -37,8 +37,8 @@ test {
     //systemProperty 'init', 'true'
 }
 
-group = 'ns.gflex'
-version = '1.1-SNAPSHOT'
+group = 'neo.script.gflex'
+version = '1.0'
 
 task sourceJar(type: Jar) {
     from(sourceSets.main.allSource, sourceSets.test.allSource)
@@ -53,8 +53,8 @@ publishing {
                 classifier "sources"
             }
 
-            groupId 'ns.gflex'
-            artifactId 'gflex-reboot-starter'
+            groupId project.group
+            artifactId project.name
             version project.version
         }
     }
@@ -77,7 +77,7 @@ bintray {
             name = project.version
             desc = "gflex-reboot-starter $project.version"
             released = new Date()
-            vcsTag = 'v1.0'
+            vcsTag = "v$project.version"
         }
     }
 }
