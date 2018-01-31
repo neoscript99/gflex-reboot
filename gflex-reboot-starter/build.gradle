@@ -2,7 +2,7 @@ apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
-
+apply plugin: "com.jfrog.artifactory"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -38,7 +38,7 @@ test {
 }
 
 group = 'neo.script.gflex'
-version = '1.0'
+version = '1.1-SNAPSHOT'
 
 task sourceJar(type: Jar) {
     from(sourceSets.main.allSource, sourceSets.test.allSource)
@@ -78,6 +78,28 @@ bintray {
             desc = "gflex-reboot-starter $project.version"
             released = new Date()
             vcsTag = "v$project.version"
+        }
+    }
+}
+
+
+artifactory {
+    contextUrl = 'http://oss.jfrog.org/artifactory'
+    resolve {
+        repository {
+            repoKey = 'libs-release'
+        }
+    }
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local' //The Artifactory repository key to publish to
+            username = bintray.user
+            password = bintray.key
+            maven = true
+        }
+        defaults {
+            publications('mavenJava')
+            publishArtifacts = true
         }
     }
 }

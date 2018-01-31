@@ -6,7 +6,8 @@ subprojects {
         }
         dependencies {
             classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-            classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+            classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+            classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.6.2"
         }
     }
 
