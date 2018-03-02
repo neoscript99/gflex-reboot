@@ -8,7 +8,7 @@
 <body>
 <script type="text/javascript">
     var amfClient = new amf.Client("paramService", "http://localhost:8081/messagebroker/amf");
-    var p = amfClient.invoke("blazeds-amf", "list", {maxResult: 10});
+    var p = amfClient.invoke("paramService", "list", {maxResult: 10});
 
     p.then(
         function (res) {
