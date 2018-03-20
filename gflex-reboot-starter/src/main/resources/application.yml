@@ -1,7 +1,6 @@
 server.port: 8081
 spring:
   h2.console.enabled: true
-  h2.console.path: "/db-console"
 
   datasource:
     #pooled: true

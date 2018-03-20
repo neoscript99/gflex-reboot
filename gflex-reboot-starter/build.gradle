@@ -28,13 +28,15 @@ springBoot {
 }
 
 bootRun {
+    jvmArgs('-Dspring.output.ansi.enabled=always')
+    systemProperty 'spring.profiles.active', 'dev'
+    systemProperty 'init', 'true'
     systemProperties System.properties
 }
 
 test {
-    systemProperties System.properties
     systemProperty 'spring.profiles.active', 'dev'
-    //systemProperty 'init', 'true'
+    systemProperties System.properties
 }
 
 group = 'neo.script.gflex'
